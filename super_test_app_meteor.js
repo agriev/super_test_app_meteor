@@ -41,12 +41,15 @@ if (Meteor.isClient) {
       //console.log(event);
       // Get value from form element
       var text = event.target.text.value;
-
+      var address = event.target.address.value;
+      var type = event.target.type.value;
       // Insert a task into the collection
-      Meteor.call("addTask", text);
+      Meteor.call("addTask", text, address, type);
 
       // Clear form
       event.target.text.value = "";
+      event.target.address.value = "";
+      event.target.type.value = "";
     },
   "change .hide-completed input": function (event) {
     Session.set("hideCompleted", event.target.checked);
@@ -78,13 +81,15 @@ if (Meteor.isClient) {
 }
 
 Meteor.methods({
-  addTask: function (text) {
+  addTask: function (text,address,type) {
     // Make sure the user is logged in before inserting a task
 
 
     Tasks.insert({
       text: text,
       createdAt: new Date(),
+      address: address,
+      type: type,
       // private : false,
       // username: Meteor.user().username
     });

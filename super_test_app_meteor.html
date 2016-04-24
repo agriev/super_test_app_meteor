@@ -6,12 +6,12 @@
 <body>
   <div class="container">
     <header>
-      <h1>Todo List ({{incompleteCount}})</h1>
+      <!-- <h1>Todo List ({{incompleteCount}})</h1> -->
 
-      <label class="hide-completed">
+      <!-- <label class="hide-completed">
         <input type="checkbox" checked="{{hideCompleted}}" />
         Hide Completed Tasks
-      </label>
+      </label> -->
       {{> loginButtons}}
 
 
@@ -29,8 +29,10 @@
 
 
     <form class="new-task">
-      <input type="text" name="text" placeholder="Type to add new tasks" />
-      <button type="button" class="btn btn-primary" name="button">Accept task</button>
+      <input type="text" name="text" placeholder="Наименование задачи" />
+      <input type="text" name="address" placeholder="Адрес назначения" />
+      <input type="text" name="type" placeholder="Тип задачи" />
+      <button type="submit" class="btn btn-primary" name="button" >Поставить задачу</button>
     </form>
     {{/if}}
 
@@ -59,6 +61,8 @@
       </button>
     {{/if}} -->
 
-   <span class="text"><strong>{{username}}</strong> - {{text}}</span>
+   <span class="text">{{text}}</span>
+   <span class="text">{{address}}</span>
+   <span class="text">{{type}}</span>
  </li>
 </template>
