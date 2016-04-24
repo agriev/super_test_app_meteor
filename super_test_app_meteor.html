@@ -1,6 +1,5 @@
 <head>
   <title>Todo List</title>
-
 </head>
 
 <body>
@@ -48,17 +47,26 @@
 <template name="task">
   <div class="header">Вам поступило новое задание</div>
   <li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}}">
-   <button class="delete">&times;</button>
-   <button type="button" class="btn btn-success accept">
-     Принять
-   </button>
-   <button type="button" class="btn btn-info reject">
-     Отказаться
-   </button>
 
-   <!-- <input type="checkbox" checked="{{checked}}" class="toggle-checked" /> -->
+    <div class="map-container">
+      {{#unless geolocationError}}
+        {{> googleMap name="map" options=mapOptions}}
+      {{else}}
+        Geolocation failed: {{geolocationError}}
+      {{/unless}}
+    </div>
 
-   <!-- {{#if isOwner}}
+    <button class="delete">&times;</button>
+    <button type="button" class="btn btn-success accept">
+      Принять
+    </button>
+    <button type="button" class="btn btn-info reject">
+      Отказаться
+    </button>
+
+    <!-- <input type="checkbox" checked="{{checked}}" class="toggle-checked" /> -->
+
+    <!-- {{#if isOwner}}
       <button class="toggle-private">
         {{#if private}}
           Private
@@ -68,8 +76,8 @@
       </button>
     {{/if}} -->
 
-   <span class="text">{{text}}</span>
-   <span class="text">{{address}}</span>
-   <span class="text">{{type}}</span>
+    <span class="text">{{text}}</span>
+    <span class="text">{{address}}</span>
+    <span class="text">{{type}}</span>
  </li>
 </template>

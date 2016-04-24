@@ -17,6 +17,11 @@ if (Meteor.isClient) {
   // This code only runs on the client
   Meteor.subscribe("tasks");
 
+  Meteor.startup(function() {
+    GoogleMaps.load();
+    GoogleMaps.key = "AIzaSyAnIl72FwOWrtgcOeFCvuOf7AvRAmxRYXA";
+  });
+
   Template.body.helpers({
     tasks: function () {
       if (Session.get("hideCompleted")) {
@@ -56,9 +61,34 @@ if (Meteor.isClient) {
     }
   });
 
+  Template.body.onCreated(function() {
+    // We can use the `ready` callback to interact with the map API once the map is ready.
+    GoogleMaps.ready('exampleMap', function(map) {
+      // Add a marker to the map once it's ready
+      var marker = new google.maps.Marker({
+        position: map.options.center,
+        map: map.instance
+      });
+    });
+  });
+
   Template.task.helpers({
     isOwner: function () {
       return this.owner === Meteor.userId();
+    },
+    geolocationError: function() {
+      var error = Geolocation.error();
+      return error && error.message;
+    },
+    mapOptions: function() {
+      var latLng = Geolocation.latLng();
+      // Initialize the map once we have the latLng.
+      if (GoogleMaps.loaded() && latLng) {
+        return {
+          center: new google.maps.LatLng(latLng.lat, latLng.lng),
+          zoom: 15
+        };
+      }
     }
   });
 
@@ -78,6 +108,17 @@ if (Meteor.isClient) {
     }
   });
 
+  Template.task.onCreated(function() {
+    GoogleMaps.ready('map', function(map) {
+      var latLng = Geolocation.latLng();
+
+      var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(latLng.lat, latLng.lng),
+        map: map.instance
+      });
+    });
+  });
+
   Accounts.ui.config({
     passwordSignupFields: "USERNAME_ONLY"
   });
@@ -86,7 +127,6 @@ if (Meteor.isClient) {
 Meteor.methods({
   addTask: function (text,address,type) {
     // Make sure the user is logged in before inserting a task
-
 
     Tasks.insert({
       text: text,
