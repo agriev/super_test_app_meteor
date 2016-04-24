@@ -19,6 +19,8 @@ if (Meteor.isClient) {
   // This code only runs on the client
   Meteor.subscribe("tasks");
 
+  var MAP_ZOOM = 15;
+  
   Meteor.startup(function() {
     GoogleMaps.load();
   });
@@ -65,10 +67,6 @@ if (Meteor.isClient) {
   Template.task.helpers({
     isOwner: function () {
       return this.owner === Meteor.userId();
-    },
-    geolocationError: function() {
-      var error = Geolocation.error();
-      return error && error.message;
     }
   });
 
