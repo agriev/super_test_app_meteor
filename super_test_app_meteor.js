@@ -76,7 +76,16 @@ if (Meteor.isClient) {
   });
 
   Template.body.rendered = function() {
-    $('#date').datetimepicker();
+    $('#dateStart, #dateFinish').datetimepicker({
+      format: 'DD-MM-YYYY HH:mm',
+      sideBySide: true,
+      stepping: 15,
+      useCurrent: true,
+      //locale: 'ru'
+      viewMode: 'days',
+      showTodayButton: true,
+
+    });
   };
 
 
