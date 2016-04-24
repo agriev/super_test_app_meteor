@@ -22,7 +22,7 @@ if (Meteor.isClient) {
   var MAP_ZOOM = 15;
 
   Meteor.startup(function() {
-    GoogleMaps.load();
+    GoogleMaps.load({ key: "AIzaSyAnIl72FwOWrtgcOeFCvuOf7AvRAmxRYXA" });
   });
 
   Template.body.helpers({
