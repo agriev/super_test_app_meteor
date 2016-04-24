@@ -92,10 +92,23 @@ if (Meteor.isClient) {
       Meteor.call("setChecked", this._id, ! this.checked);
     },
     "click .delete": function () {
+<<<<<<< Updated upstream
       Meteor.call("deleteTask", this._id);
     },
     "click .toggle-private": function () {
       Meteor.call("setPrivate", this._id, ! this.private);
+=======
+       Meteor.call("deleteTask", this._id);
+     },
+     "click .reject": function () {
+        Meteor.call("deleteTask", this._id);
+      },
+     "click .toggle-private": function () {
+       Meteor.call("setPrivate", this._id, ! this.private);
+    },
+    "click .accept": function(){
+      $(".map-container").show();
+>>>>>>> Stashed changes
     }
   });
 
@@ -196,5 +209,9 @@ Meteor.methods({
   }
 
   Tasks.update(taskId, { $set: { private: setToPrivate } });
+},
+  setAccepted: function(taskId){
+    var task = Tasks.findOne(taskId);
+    Tasks.update(taskId, { $set: { accepted : true } });
   }
 });
