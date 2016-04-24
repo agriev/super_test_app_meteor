@@ -17,6 +17,7 @@
 
 
     </header>
+    Демонстрационный набор
     {{#if currentUser}}
 
 
@@ -31,7 +32,12 @@
     <form class="new-task">
       <input type="text" name="text" placeholder="Наименование задачи" />
       <input type="text" name="address" placeholder="Адрес назначения" />
-      <input type="text" name="type" placeholder="Тип задачи" />
+      <!-- <input type="text" name="type" placeholder="Тип задачи" /> -->
+      <select name="type" class="form-control">
+              <option value="Уборка">Уборка</option>
+              <option value="Помыв">Помыв</option>
+              <option value="Вывоз мусора">Вывоз мусора</option>
+      </select>
       <button type="submit" class="btn btn-primary" name="button" >Поставить задачу</button>
     </form>
     {{/if}}
@@ -40,12 +46,13 @@
 </body>
 
 <template name="task">
+  <div class="header">Вам поступило новое задание</div>
   <li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}}">
    <button class="delete">&times;</button>
    <button type="button" class="btn btn-success accept">
      Принять
    </button>
-   <button type="button" class="btn btn-info Отказаться">
+   <button type="button" class="btn btn-info reject">
      Отказаться
    </button>
 
