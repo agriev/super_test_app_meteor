@@ -16,7 +16,9 @@
 
 
     </header>
-    Демонстрационный набор
+    Демонстрационный режим
+
+
     {{#if currentUser}}
 
 
@@ -25,6 +27,9 @@
         {{> task}}
       {{/each}}
     </ul>
+    <div class="map-container">
+    {{> googleMap name="main_map" options=exampleMapOptions }}
+    </div>
     {{else}}
 
 
@@ -49,8 +54,8 @@
 
 <template name="task">
   <div class="header">Вам поступило новое задание</div>
-  <li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}}">
 
+  <li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}}">
     <button class="delete">&times;</button>
     <button type="button" class="btn btn-success accept">
       Принять
@@ -74,6 +79,7 @@
     <span class="text">{{text}}</span>
     <span class="text">{{address}}</span>
     <span class="text">{{type}}</span>
+
  </li>
 </template>
 
