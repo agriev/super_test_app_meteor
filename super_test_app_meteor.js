@@ -9,7 +9,7 @@ if (Meteor.isServer) {
     //     { owner: this.userId }
     //   ]
     // });
-    return Tasks.find();
+    return Tasks.find({});
   });
 }
 
@@ -86,7 +86,7 @@ Meteor.methods({
       text: text,
       createdAt: new Date(),
       // private : false,
-      username: Meteor.user().username
+      // username: Meteor.user().username
     });
   },
   deleteTask: function (taskId) {

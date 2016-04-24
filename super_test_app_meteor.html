@@ -18,12 +18,16 @@
 
     </header>
     {{#if currentUser}}
+
+
     <ul>
       {{#each tasks}}
         {{> task}}
       {{/each}}
     </ul>
     {{else}}
+
+
     <form class="new-task">
       <input type="text" name="text" placeholder="Type to add new tasks" />
       <button type="button" class="btn btn-primary" name="button">Accept task</button>
