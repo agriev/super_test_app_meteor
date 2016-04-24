@@ -4,7 +4,13 @@
 
 <body>
 
-  <nav class="navbar navbar-default navbar-fixed-top">
+  {{#if currentUser}}
+    <style>
+      body { background-color:#343434; }
+    </style>
+  {{/if}}
+
+  <nav class="navbar {{#if currentUser}}navbar-inverse{{else}}navbar-default{{/if}} navbar-fixed-top">
     <div class="container">
       <div class="navbar-text navbar-right">{{> loginButtons}}</div>
 
@@ -20,23 +26,33 @@
   <!-- ПРЕДСТАВЛЕНИЕ ДЛЯ ВОДИТЕЛЯ -->
   <!---->
   {{#if currentUser}}
-
-  <div class="container-fluid">
+  <div class="container-fluid container-driver">
     <div class="row">
       <div class="col-xs-4">
 
-        <ul>
-          {{#each tasks}}
-            {{> task}}
-          {{/each}}
-        </ul>
+        <div class="task-active">
+          <h2>Маршрут из ебеней в хуилово</h2>
+          <p>Сегодня с 9:00 до 14:00</p>
+          <p class="text-muted">Полить говном</p>
+          <ol class="odhs">
+            <li>Мамоновский пер.</li>
+            <li>Тверская ул.</li>
+            <li>Новопушкинский сквер</li>
+          </ol>
+          <p class="text-muted">Лей хорошо, сука</p>
+
+          <button class="btn btn-md btn-success">Задание выполнено</button>
+        </div>
+
+        <!--<ul class="tasks">-->
+          <!--{{#each tasks}}-->
+            <!--{{> task}}-->
+          <!--{{/each}}-->
+        <!--</ul>-->
 
       </div>
-      <div class="col-xs-8">
-        <div class="map-container">
-          {{> googleMap name="main_map" options=exampleMapOptions }}
-        </div>
-        {{> map}}
+      <div class="col-xs-8 map-container">
+        {{> googleMap name="main_map" options=exampleMapOptions }}
       </div>
     </div>
   </div>
@@ -51,15 +67,76 @@
     <div class="row">
       <div class="col-xs-12">
         <form class="new-task">
-          <input type="text" name="text" placeholder="Наименование задачи" />
-          <input type="text" name="address" placeholder="Адрес назначения" />
-          <!-- <input type="text" name="type" placeholder="Тип задачи" /> -->
-          <select name="type" class="form-control">
-                  <option value="Уборка">Уборка</option>
-                  <option value="Помыв">Помыв</option>
-                  <option value="Вывоз мусора">Вывоз мусора</option>
-          </select>
-          <button type="submit" class="btn btn-primary" name="button" >Поставить задачу</button>
+
+          <div class="form-group">
+            <label for="route">Маршрут</label>
+            <select name="route" class="form-control">
+              <option value="Таганская пл. — Велозаводская ул.">Таганская пл. — Велозаводская ул.</option>
+              <option value="Арбат улица">Арбат улица</option>
+              <option value="Воробьевская наб. — Университетская пл.">Воробьевская наб. — Университетская пл.</option>
+            </select>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="">
+              Мамоновский пер.
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="">
+              Тверская ул.
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="">
+              Новопушкинский сквер
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label for="techOperation">Вид работ</label>
+            <select name="techOperation" id="techOperation" class="form-control">
+              <option value="Механизированное подметание тротуаров">Механизированное подметание тротуаров</option>
+              <option value="Механизированное подметание осевых">Механизированное подметание осевых</option>
+              <option value="Механизированное подметание">Механизированное подметание</option>
+              <option value="Уборка барьерных ограждений">Уборка барьерных ограждений</option>
+              <option value="Полив проезжей части">Полив проезжей части</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="worker">Исполнитель</label>
+            <select name="worker" id="worker" class="form-control">
+              <option value="9032ПА77 — Демин Алексей Виссарионович">9032ПА77 — Демин Алексей Виссарионович</option>
+              <option value="9020НА77 — Ефимов Анатолий Иванович">9020НА77 — Ефимов Анатолий Иванович</option>
+              <option value="7693НА77 — Седов Александр Петрович">7693НА77 — Седов Александр Петрович</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Дата и время</label>
+            <input type="datetime" class="form-control" name="dateStart" />
+            <input type="datetime" class="form-control" name="dateFinish" />
+          </div>
+
+          <div class="form-group">
+            <label for="comment">Коментарий</label>
+            <textarea name="comment" id="comment" class="form-control"></textarea>
+          </div>
+
+
+          <!--<input type="text" name="text" placeholder="Наименование задачи" />-->
+          <!--<input type="text" name="address" placeholder="Адрес назначения" />-->
+          <!--&lt;!&ndash; <input type="text" name="type" placeholder="Тип задачи" /> &ndash;&gt;-->
+          <!--<select name="type" class="form-control">-->
+                  <!--<option value="Уборка">Уборка</option>-->
+                  <!--<option value="Помыв">Помыв</option>-->
+                  <!--<option value="Вывоз мусора">Вывоз мусора</option>-->
+          <!--</select>-->
+          <button type="submit" class="btn btn-success" name="button" >Поставить задачу</button>
         </form>
       </div>
     </div>
