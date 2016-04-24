@@ -48,13 +48,7 @@
   <div class="header">Вам поступило новое задание</div>
   <li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}}">
 
-    <div class="map-container">
-      {{#unless geolocationError}}
-        {{> googleMap name="map" options=mapOptions}}
-      {{else}}
-        Geolocation failed: {{geolocationError}}
-      {{/unless}}
-    </div>
+    {{> map}}
 
     <button class="delete">&times;</button>
     <button type="button" class="btn btn-success accept">
@@ -80,4 +74,14 @@
     <span class="text">{{address}}</span>
     <span class="text">{{type}}</span>
  </li>
+</template>
+
+<template name="map">
+  <div class="map-container">
+    {{#unless geolocationError}}
+      {{> googleMap name="map" options=mapOptions}}
+    {{else}}
+      Geolocation failed: {{geolocationError}}
+    {{/unless}}
+  </div>
 </template>

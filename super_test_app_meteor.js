@@ -13,13 +13,14 @@ if (Meteor.isServer) {
   });
 }
 
+
+
 if (Meteor.isClient) {
   // This code only runs on the client
   Meteor.subscribe("tasks");
 
   Meteor.startup(function() {
     GoogleMaps.load();
-    GoogleMaps.key = "AIzaSyAnIl72FwOWrtgcOeFCvuOf7AvRAmxRYXA";
   });
 
   Template.body.helpers({
@@ -61,17 +62,6 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.body.onCreated(function() {
-    // We can use the `ready` callback to interact with the map API once the map is ready.
-    GoogleMaps.ready('exampleMap', function(map) {
-      // Add a marker to the map once it's ready
-      var marker = new google.maps.Marker({
-        position: map.options.center,
-        map: map.instance
-      });
-    });
-  });
-
   Template.task.helpers({
     isOwner: function () {
       return this.owner === Meteor.userId();
@@ -79,16 +69,6 @@ if (Meteor.isClient) {
     geolocationError: function() {
       var error = Geolocation.error();
       return error && error.message;
-    },
-    mapOptions: function() {
-      var latLng = Geolocation.latLng();
-      // Initialize the map once we have the latLng.
-      if (GoogleMaps.loaded() && latLng) {
-        return {
-          center: new google.maps.LatLng(latLng.lat, latLng.lng),
-          zoom: 15
-        };
-      }
     }
   });
 
@@ -108,15 +88,52 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.task.onCreated(function() {
-    GoogleMaps.ready('map', function(map) {
-      var latLng = Geolocation.latLng();
+  Template.map.onCreated(function() {
+    var self = this;
 
-      var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(latLng.lat, latLng.lng),
-        map: map.instance
+    GoogleMaps.ready('map', function(map) {
+      var marker;
+
+      // Create and move the marker when latLng changes.
+      self.autorun(function() {
+        var latLng = Geolocation.latLng();
+        if (! latLng)
+          return;
+
+        // If the marker doesn't yet exist, create it.
+        if (! marker) {
+          marker = new google.maps.Marker({
+            position: new google.maps.LatLng(latLng.lat, latLng.lng),
+            map: map.instance
+          });
+        }
+        // The marker already exists, so we'll just change its position.
+        else {
+          marker.setPosition(latLng);
+        }
+
+        // Center and zoom the map view onto the current position.
+        map.instance.setCenter(marker.getPosition());
+        map.instance.setZoom(MAP_ZOOM);
       });
     });
+  });
+
+  Template.map.helpers({
+    geolocationError: function() {
+      var error = Geolocation.error();
+      return error && error.message;
+    },
+    mapOptions: function() {
+      var latLng = Geolocation.latLng();
+      // Initialize the map once we have the latLng.
+      if (GoogleMaps.loaded() && latLng) {
+        return {
+          center: new google.maps.LatLng(latLng.lat, latLng.lng),
+          zoom: MAP_ZOOM
+        };
+      }
+    }
   });
 
   Accounts.ui.config({
