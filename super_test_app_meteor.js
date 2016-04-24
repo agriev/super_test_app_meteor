@@ -75,6 +75,9 @@ if (Meteor.isClient) {
     }
   });
 
+  Template.body.rendered = function() {
+    $('#date').datetimepicker();
+  };
 
 
   Template.task.helpers({

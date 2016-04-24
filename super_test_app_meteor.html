@@ -118,8 +118,11 @@
 
           <div class="form-group">
             <label>Дата и время</label>
-            <input type="datetime" class="form-control" name="dateStart" />
-            <input type="datetime" class="form-control" name="dateFinish" />
+            <div class="input-group datetimepicker">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+              <input class="set-due-date form-control" id="date" type="text"/>
+            </div>
+            <!--<input type="text" class="form-control" id="dateFinish">-->
           </div>
 
           <div class="form-group">
