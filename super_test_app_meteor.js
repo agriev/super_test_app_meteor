@@ -20,7 +20,7 @@ if (Meteor.isClient) {
   Meteor.subscribe("tasks");
 
   var MAP_ZOOM = 15;
-  
+
   Meteor.startup(function() {
     GoogleMaps.load();
   });
@@ -40,7 +40,17 @@ if (Meteor.isClient) {
     },
     incompleteCount: function () {
       return Tasks.find({checked: {$ne: true}}).count();
+    },
+    exampleMapOptions: function() {
+    // Make sure the maps API has loaded
+    if (GoogleMaps.loaded()) {
+      // Map initialization options
+      return {
+        center: new google.maps.LatLng(-37.8136, 144.9631),
+        zoom: 8
+      };
     }
+  }
   });
   Template.body.events({
     "submit .new-task": function (event) {
@@ -86,7 +96,7 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.map.onCreated(function() {
+  Template.body.onCreated(function() {
     var self = this;
 
     GoogleMaps.ready('map', function(map) {
