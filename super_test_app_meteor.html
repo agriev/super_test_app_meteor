@@ -42,13 +42,14 @@
     {{/if}}
 
   </div>
+
+  {{> map}}
+
 </body>
 
 <template name="task">
   <div class="header">Вам поступило новое задание</div>
   <li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}}">
-
-    {{> map}}
 
     <button class="delete">&times;</button>
     <button type="button" class="btn btn-success accept">

@@ -20,7 +20,7 @@ if (Meteor.isClient) {
   Meteor.subscribe("tasks");
 
   var MAP_ZOOM = 15;
-  
+
   Meteor.startup(function() {
     GoogleMaps.load();
   });
@@ -120,6 +120,7 @@ if (Meteor.isClient) {
   Template.map.helpers({
     geolocationError: function() {
       var error = Geolocation.error();
+      console.log(error);
       return error && error.message;
     },
     mapOptions: function() {
