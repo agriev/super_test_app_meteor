@@ -43,15 +43,16 @@ if (Meteor.isClient) {
     },
     exampleMapOptions: function() {
     // Make sure the maps API has loaded
-    if (GoogleMaps.loaded()) {
-      // Map initialization options
-      return {
-        center: new google.maps.LatLng(-37.8136, 144.9631),
-        zoom: 8
-      };
+      if (GoogleMaps.loaded()) {
+        // Map initialization options
+        return {
+          center: new google.maps.LatLng(-37.8136, 144.9631),
+          zoom: 8
+        };
+      }
     }
-  }
   });
+
   Template.body.events({
     "submit .new-task": function (event) {
       // Prevent default browser form submit
@@ -74,6 +75,8 @@ if (Meteor.isClient) {
     }
   });
 
+
+
   Template.task.helpers({
     isOwner: function () {
       return this.owner === Meteor.userId();
@@ -86,15 +89,14 @@ if (Meteor.isClient) {
       Meteor.call("setChecked", this._id, ! this.checked);
     },
     "click .delete": function () {
-       Meteor.call("deleteTask", this._id);
-     },
-     "click .reject": function () {
-        Meteor.call("deleteTask", this._id);
-      },
-     "click .toggle-private": function () {
-       Meteor.call("setPrivate", this._id, ! this.private);
+      Meteor.call("deleteTask", this._id);
+    },
+    "click .toggle-private": function () {
+      Meteor.call("setPrivate", this._id, ! this.private);
     }
   });
+
+
 
   Template.body.onCreated(function() {
     var self = this;
@@ -149,6 +151,8 @@ if (Meteor.isClient) {
     passwordSignupFields: "USERNAME_ONLY"
   });
 }
+
+
 
 Meteor.methods({
   addTask: function (text,address,type) {

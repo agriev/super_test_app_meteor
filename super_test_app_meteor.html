@@ -3,66 +3,102 @@
 </head>
 
 <body>
-  <div class="container">
-    <header>
-      <!-- <h1>Todo List ({{incompleteCount}})</h1> -->
 
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-text navbar-right">{{> loginButtons}}</div>
+
+      <!-- <p class="navbar-text navbar-right">Todo List ({{incompleteCount}})</p> -->
       <!-- <label class="hide-completed">
         <input type="checkbox" checked="{{hideCompleted}}" />
         Hide Completed Tasks
       </label> -->
-      {{> loginButtons}}
-
-
-
-    </header>
-    Демонстрационный режим
-
-
-    {{#if currentUser}}
-
-
-    <ul>
-      {{#each tasks}}
-        {{> task}}
-      {{/each}}
-    </ul>
-    <div class="map-container">
-    {{> googleMap name="main_map" options=exampleMapOptions }}
     </div>
-    {{else}}
+  </nav>
 
+  <!---->
+  <!-- ПРЕДСТАВЛЕНИЕ ДЛЯ ВОДИТЕЛЯ -->
+  <!---->
+  {{#if currentUser}}
 
-    <form class="new-task">
-      <input type="text" name="text" placeholder="Наименование задачи" />
-      <input type="text" name="address" placeholder="Адрес назначения" />
-      <!-- <input type="text" name="type" placeholder="Тип задачи" /> -->
-      <select name="type" class="form-control">
-              <option value="Уборка">Уборка</option>
-              <option value="Помыв">Помыв</option>
-              <option value="Вывоз мусора">Вывоз мусора</option>
-      </select>
-      <button type="submit" class="btn btn-primary" name="button" >Поставить задачу</button>
-    </form>
-    {{/if}}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-4">
 
+        <ul>
+          {{#each tasks}}
+            {{> task}}
+          {{/each}}
+        </ul>
+
+      </div>
+      <div class="col-xs-8">
+        <div class="map-container">
+          {{> googleMap name="main_map" options=exampleMapOptions }}
+        </div>
+        {{> map}}
+      </div>
+    </div>
   </div>
 
-  {{> map}}
+  {{> newTaskModal}}
+
+  <!---->
+  <!-- ПРЕДСТАВЛЕНИЕ ДЛЯ ОПЕРАТОРА -->
+  <!---->
+  {{else}}
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <form class="new-task">
+          <input type="text" name="text" placeholder="Наименование задачи" />
+          <input type="text" name="address" placeholder="Адрес назначения" />
+          <!-- <input type="text" name="type" placeholder="Тип задачи" /> -->
+          <select name="type" class="form-control">
+                  <option value="Уборка">Уборка</option>
+                  <option value="Помыв">Помыв</option>
+                  <option value="Вывоз мусора">Вывоз мусора</option>
+          </select>
+          <button type="submit" class="btn btn-primary" name="button" >Поставить задачу</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {{/if}}
 
 </body>
 
-<template name="task">
-  <div class="header">Вам поступило новое задание</div>
 
+
+<template name="newTaskModal">
+  <div class="modal fade" id="newTaskModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Вам поступило новое задание</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{text}}</p>
+          <p>{{address}}</p>
+          <p>{{type}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Принять</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+</template>
+
+
+
+<template name="task">
   <li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}}">
     <button class="delete">&times;</button>
-    <button type="button" class="btn btn-success accept">
-      Принять
-    </button>
-    <button type="button" class="btn btn-info reject">
-      Отказаться
-    </button>
+
+    <p>{{text}}</p>
+    <p>{{address}}</p>
+    <p>{{type}}</p>
 
     <!-- <input type="checkbox" checked="{{checked}}" class="toggle-checked" /> -->
 
@@ -75,13 +111,10 @@
         {{/if}}
       </button>
     {{/if}} -->
-
-    <span class="text">{{text}}</span>
-    <span class="text">{{address}}</span>
-    <span class="text">{{type}}</span>
-
  </li>
 </template>
+
+
 
 <template name="map">
   <div class="map-container">
