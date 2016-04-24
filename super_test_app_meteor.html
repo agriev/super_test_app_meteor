@@ -19,7 +19,6 @@
         <input type="checkbox" checked="{{hideCompleted}}" />
         Hide Completed Tasks
       </label> -->
-<<<<<<< Updated upstream
     </div>
   </nav>
 
@@ -57,31 +56,6 @@
       </div>
     </div>
   </div>
-=======
-      {{> loginButtons}}
-
-
-
-    </header>
-    Демонстрационный режим
-
-
-    {{#if currentUser}}
-
-
-    <ul>
-      {{#each tasks}}
-        {{> task}}
-        <div class="map-container" style="display:none">
-        {{> googleMap name="main_map" options=exampleMapOptions }}
-        </div>
-      {{/each}}
-    </ul>
-
-
-    {{else}}
-
->>>>>>> Stashed changes
 
   {{> newTaskModal}}
 
